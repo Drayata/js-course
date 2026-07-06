@@ -25,9 +25,9 @@ x = Math.min(4, 5, 3);
 x = Math.max(4, 5, 3);
 
 // Get a random number/decimal between 0 and 1
-x = Math.random();
+x = Math.random() * 2 + 1;
 
 // Get a random number between 1 and 100
-x = Math.floor(Math.random() * 100 + 1);
+// x = Math.floor(Math.random() * 100 + 1);
 
 console.log(x);
