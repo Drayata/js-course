@@ -4,6 +4,7 @@ const riwayatPerjalanan = [
   { tujuan: "Stasiun Gambir", tarif: 15000 },
 ];
 
+//trip itu bebas
 const perjalananPremium = riwayatPerjalanan.filter(
   (trip) => trip.tujuan === "Stasiun Gambir",
 );
