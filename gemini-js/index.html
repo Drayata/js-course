@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ojol Driver Panel</title>
+
+    <!-- 🎨 STYLE CSS: Membuat tampilan minimalis & modern -->
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f4f6f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .card {
+        background: #ffffff;
+        width: 350px;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        text-align: center;
+      }
+
+      h2 {
+        color: #333;
+        margin-bottom: 5px;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        /* Default Off/Tidak Aktif */
+        background-color: #ffe5e5;
+        color: #e63946;
+      }
+
+      .income-section {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .income-section p {
+        font-size: 14px;
+        color: #777;
+      }
+
+      .income-amount {
+        font-size: 24px;
+        font-weight: bold;
+        color: #2b2b2b;
+        margin-top: 5px;
+      }
+
+      /* 🔘 Kumpulan Tombol */
+      .btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 10px;
+      }
+
+      .btn-toggle {
+        background-color: #2b2b2b;
+        color: #fff;
+      }
+
+      .btn-toggle:hover {
+        background-color: #444;
+      }
+
+      .btn-order {
+        background-color: #2a9d8f;
+        color: #fff;
+      }
+
+      .btn-order:hover {
+        background-color: #21867a;
+      }
+
+      /* Tombol order dinonaktifkan secara visual jika driver off */
+      .btn-order:disabled {
+        background-color: #cccccc;
+        color: #888888;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 🏗️ STRUKTUR HTML -->
+    <div class="card">
+      <h2>Indra Surya</h2>
+      <div id="txt-rating">Rating: ⭐ 5.0</div>
+      <div id="txt-status" class="status-badge">Driver Nonaktif</div>
+
+      <div class="income-section">
+        <p>Pendapatan Hari Ini</p>
+        <div id="txt-pendapatan" class="income-amount">Rp 0</div>
+      </div>
+
+      <!-- Tombol Kontrol -->
+      <button id="btn-saklar" class="btn btn-toggle">
+        Aktifkan Terlebih Dahulu
+      </button>
+      <button id="btn-tarik-order" class="btn btn-order" disabled>
+        Tarik Orderan (Rp 20.000)
+      </button>
+    </div>
+
+    <!-- 🧠 LOGIKA JAVASCRIPT DOM -->
+    <script>
+      // 1. TARGETING: Pegang semua elemen HTML yang dibutuhkan
+      const txtStatus = document.querySelector("#txt-status");
+      const txtPendapatan = document.querySelector("#txt-pendapatan");
+      const btnSaklar = document.querySelector("#btn-saklar");
+      const btnTarikOrder = document.querySelector("#btn-tarik-order");
+
+      // Data State (Penyimpanan Data Aplikasi)
+      let apakahDriverAktif = false;
+      let totalPendapatan = 0;
+
+      // 2. LISTENING & CHANGING untuk Tombol Saklar (On/Off Driver)
+      btnSaklar.addEventListener("click", () => {
+        // Balik nilai boolean (jika true jadi false, jika false jadi true)
+        apakahDriverAktif = !apakahDriverAktif;
+
+        if (apakahDriverAktif) {
+          // Perubahan tampilan saat AKTIF
+          txtStatus.innerText = "Driver Aktif";
+          txtStatus.style.backgroundColor = "#e8f5e9";
+          txtStatus.style.color = "#2e7d32";
+          btnSaklar.innerText = "Matikan Driver";
+
+          // Aktifkan tombol tarik order
+          btnTarikOrder.disabled = false;
+        } else {
+          // Perubahan tampilan saat NONAKTIF
+          txtStatus.innerText = "Driver Nonaktif";
+          txtStatus.style.backgroundColor = "#ffe5e5";
+          txtStatus.style.color = "#e63946";
+          btnSaklar.innerText = "Aktifkan Driver";
+
+          // Matikan tombol tarik order
+          btnTarikOrder.disabled = true;
+        }
+      });
+
+      // 3. LISTENING & CHANGING untuk Tombol Tarik Orderan
+      btnTarikOrder.addEventListener("click", () => {
+        // Tambah pendapatan Rp 20.000 setiap klik orderan berhasil
+        totalPendapatan = totalPendapatan + 20000;
+
+        // Tampilkan pendapatan terbaru ke HTML
+        txtPendapatan.innerText = `Rp ${totalPendapatan}`;
+      });
+    </script>
+  </body>
+</html>

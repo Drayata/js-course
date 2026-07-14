@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dompet Driver</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      body {
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .box {
+        background: white;
+        width: 320px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      h3 {
+        color: #555;
+        margin-bottom: 5px;
+      }
+      .saldo {
+        font-size: 32px;
+        font-weight: bold;
+        color: #10b981;
+        margin-bottom: 20px;
+      }
+      .btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+      .btn-topup {
+        background-color: #2563eb;
+        color: white;
+      }
+      .btn-bayar {
+        background-color: #dc2626;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h3>Saldo Dompet</h3>
+      <!-- Elemen yang menampilkan saldo -->
+      <div id="display-saldo">Rp 0</div>
+
+      <!-- Tombol Kontrol -->
+      <button id="btn-isi-saldo" class="btn btn-topup">
+        Isi Saldo (Rp 50.000)
+      </button>
+      <button id="btn-tarik-saldo" class="btn btn-bayar">
+        Bayar Bensin (Rp 20.000)
+      </button>
+    </div>
+
+    <script>
+      // === KODE JAVASCRIPT KAMU DIMULAI DI SINI ===
+      const tombolIsi = document.querySelector("#btn-isi-saldo");
+      const tombolBayar = document.querySelector("#btn-tarik-saldo");
+      const displaySaldo = document.querySelector("#display-saldo");
+
+      let jumlahSaldo = 0;
+      tombolIsi.addEventListener("click", () => {
+        jumlahSaldo += 50000;
+        displaySaldo.innerHTML = `Rp. ${jumlahSaldo}`;
+      });
+
+      tombolBayar.addEventListener("click", () => {
+        if (jumlahSaldo >= 20000) {
+          jumlahSaldo -= 20000;
+          displaySaldo.innerHTML = `Rp. ${jumlahSaldo}`;
+        }
+      });
+      // ===========================================
+    </script>
+  </body>
+</html>
