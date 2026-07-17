@@ -37,6 +37,16 @@ const App = () => {
     setApakahDriverAktif(!apakahDriverAktif);
   };
 
+  const tombolHapusRiwayat = () => {
+    setRiwayat([]);
+  };
+
+  const daftarOrderan = [
+    { id: 101, penumpang: "Budi Santoso", jarak: "3.5 km", tarif: 15000 },
+    { id: 102, penumpang: "Siti Rahma", jarak: "5.2 km", tarif: 22000 },
+    { id: 103, penumpang: "Anto Wijaya", jarak: "1.2 km", tarif: 10000 },
+  ];
+
   return (
     // Wrapper luar dibikin flex-col supaya riwayat bisa ditaruh di bawah card
     <div className="min-h-screen bg-slate-100 flex flex-col justify-center items-center py-10">
@@ -87,11 +97,44 @@ const App = () => {
         </button>
       </div>
 
-      {/* 📜 CARD RIWAYAT TRANSAKSI (Muncul otomatis di bawah card utama) */}
+      {/* 🚗 CARD ORDERAN MASUK */}
       <div className="bg-white w-80 p-6 rounded-2xl shadow-sm mt-4">
+        <h3 className="text-sm font-bold text-slate-700 mb-3 text-left">
+          Orderan Tersedia ({daftarOrderan.length})
+        </h3>
+
+        <div className="space-y-2">
+          {/* ======================================================== */}
+          {/* TULIS FUNGSI .MAP() KAMU DI SINI                          */}
+          {daftarOrderan.map((item) => (
+            <div
+              key={item.id}
+              className="flex justify-between items-center bg-slate-50 p-3 rounded-xl text-sm"
+            >
+              <div className="text-left">
+                <p className="font-semibold text-slate-700">{item.penumpang}</p>
+                <p className="text-xs text-slate-400">{item.jarak}</p>
+              </div>
+              <span className="font-bold text-emerald-600">
+                Rp {item.tarif}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 📜 CARD RIWAYAT TRANSAKSI (Muncul otomatis di bawah card utama) */}
+      <div className="relative bg-white w-80 p-6 rounded-2xl shadow-sm mt-4">
         <h3 className="text-sm font-bold text-slate-700 mb-3 text-left">
           Riwayat Transaksi
         </h3>
+        <button
+          onClick={tombolHapusRiwayat}
+          className="absolute right-5 top-4.5 text-white font-semibold text-sm bg-red-600 p-1.5 rounded-xl hover:bg-red-700 disabled:bg-slate-200 disabled:text-slate-400 "
+          disabled={riwayat.length === 0}
+        >
+          Hapus Riwayat
+        </button>
 
         {/* Jalankan pengkondisian: jika riwayat kosong, tampilkan teks kosong */}
         {riwayat.length === 0 ? (
