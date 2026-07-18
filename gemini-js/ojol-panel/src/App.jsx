@@ -40,11 +40,31 @@ const App = () => {
     setRiwayat([]);
   };
 
-  const daftarOrderan = [
+  const tombolTerimaOrderan = (idOrderan, tarifOrderan, namaPenumpang) => {
+    // 1. Tambah Saldo sesuai tarif orderan
+    setSaldo(saldo + tarifOrderan);
+
+    // 2. Tambah ke Riwayat Transaksi
+    setRiwayat([
+      ...riwayat,
+      {
+        id: Date.now(),
+        tipe: `Orderan (${namaPenumpang})`,
+        nominal: tarifOrderan,
+        apakahMasuk: true,
+      },
+    ]);
+
+    // 3. Hapus orderan yang diterima dari daftar menggunakan .filter()
+    const sisaOrderan = daftarOrderan.filter((item) => item.id !== idOrderan);
+    setDaftarOrderan(sisaOrderan);
+  };
+
+  const [daftarOrderan, setDaftarOrderan] = useState([
     { id: 101, penumpang: "Budi Santoso", jarak: "3.5 km", tarif: 15000 },
     { id: 102, penumpang: "Siti Rahma", jarak: "5.2 km", tarif: 22000 },
     { id: 103, penumpang: "Anto Wijaya", jarak: "1.2 km", tarif: 10000 },
-  ];
+  ]);
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col justify-center items-center py-10">
@@ -56,7 +76,11 @@ const App = () => {
         tombolBeliBensin={tombolBeliBensin}
       />
 
-      <OrderanTersedia daftarOrderan={daftarOrderan} />
+      <OrderanTersedia
+        daftarOrderan={daftarOrderan}
+        tombolTerimaOrderan={tombolTerimaOrderan}
+        apakahDriverAktif={apakahDriverAktif}
+      />
 
       <CardRiwayat riwayat={riwayat} tombolHapusRiwayat={tombolHapusRiwayat} />
     </div>
