@@ -1,7 +1,11 @@
 import React from "react";
 
 // 1. Tentukan nama props yang dikirim dari Parent di dalam kurung kurawal
-const CardRiwayat = ({ riwayat, tombolHapusRiwayat }) => {
+const CardRiwayat = ({
+  riwayat,
+  tombolHapusRiwayat,
+  tombolHapusSatuRiwayat,
+}) => {
   return (
     <div className="relative bg-white w-80 p-6 rounded-2xl shadow-sm mt-4">
       <h3 className="text-sm font-bold text-slate-700 mb-3 text-left">
@@ -23,7 +27,7 @@ const CardRiwayat = ({ riwayat, tombolHapusRiwayat }) => {
       ) : (
         <div className="space-y-2">
           {/* 🔄 Perulangan untuk menggambar item array menggunakan .map() */}
-          {riwayat.map((item) => (
+          {riwayat.toReversed().map((item) => (
             <div
               key={item.id}
               className="flex justify-between items-center bg-slate-50 p-3 rounded-xl text-sm"
@@ -34,6 +38,12 @@ const CardRiwayat = ({ riwayat, tombolHapusRiwayat }) => {
               >
                 {item.apakahMasuk ? "+" : "-"} Rp {item.nominal}
               </span>
+              <button
+                onClick={() => tombolHapusSatuRiwayat(item.id)}
+                className="font-medium text-white bg-red-600 px-1.5 py-0.5 text-xs rounded-xl hover:bg-red-700"
+              >
+                Hapus
+              </button>
             </div>
           ))}
         </div>

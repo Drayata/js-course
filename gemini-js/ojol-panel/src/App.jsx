@@ -7,6 +7,11 @@ const App = () => {
   const [saldo, setSaldo] = useState(0);
   const [apakahDriverAktif, setApakahDriverAktif] = useState(false);
   const [riwayat, setRiwayat] = useState([]);
+  const [daftarOrderan, setDaftarOrderan] = useState([
+    { id: 101, penumpang: "Budi Santoso", jarak: "3.5 km", tarif: 15000 },
+    { id: 102, penumpang: "Siti Rahma", jarak: "5.2 km", tarif: 22000 },
+    { id: 103, penumpang: "Anto Wijaya", jarak: "1.2 km", tarif: 10000 },
+  ]);
 
   const tombolTarikOrderan = () => {
     setSaldo(saldo + 20000);
@@ -40,31 +45,24 @@ const App = () => {
     setRiwayat([]);
   };
 
-  const tombolTerimaOrderan = (idOrderan, tarifOrderan, namaPenumpang) => {
-    // 1. Tambah Saldo sesuai tarif orderan
-    setSaldo(saldo + tarifOrderan);
+  const tombolTerimaOrderan = (id, penumpang, tarif) => {
+    setSaldo(saldo + tarif);
 
-    // 2. Tambah ke Riwayat Transaksi
-    setRiwayat([
-      ...riwayat,
-      {
-        id: Date.now(),
-        tipe: `Orderan (${namaPenumpang})`,
-        nominal: tarifOrderan,
-        apakahMasuk: true,
-      },
-    ]);
-
-    // 3. Hapus orderan yang diterima dari daftar menggunakan .filter()
-    const sisaOrderan = daftarOrderan.filter((item) => item.id !== idOrderan);
+    const transaksiBaru = {
+      id: Date.now(),
+      tipe: `Orderan (${penumpang})`,
+      nominal: tarif,
+      apakahMasuk: true,
+    };
+    setRiwayat([...riwayat, transaksiBaru]);
+    const sisaOrderan = daftarOrderan.filter((item) => item.id !== id);
     setDaftarOrderan(sisaOrderan);
   };
 
-  const [daftarOrderan, setDaftarOrderan] = useState([
-    { id: 101, penumpang: "Budi Santoso", jarak: "3.5 km", tarif: 15000 },
-    { id: 102, penumpang: "Siti Rahma", jarak: "5.2 km", tarif: 22000 },
-    { id: 103, penumpang: "Anto Wijaya", jarak: "1.2 km", tarif: 10000 },
-  ]);
+  const tombolHapusSatuRiwayat = (id) => {
+    const sisaRiwayat = riwayat.filter((item) => item.id !== id);
+    setRiwayat(sisaRiwayat);
+  };
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col justify-center items-center py-10">
@@ -78,11 +76,15 @@ const App = () => {
 
       <OrderanTersedia
         daftarOrderan={daftarOrderan}
-        tombolTerimaOrderan={tombolTerimaOrderan}
         apakahDriverAktif={apakahDriverAktif}
+        tombolTerimaOrderan={tombolTerimaOrderan}
       />
 
-      <CardRiwayat riwayat={riwayat} tombolHapusRiwayat={tombolHapusRiwayat} />
+      <CardRiwayat
+        riwayat={riwayat}
+        tombolHapusRiwayat={tombolHapusRiwayat}
+        tombolHapusSatuRiwayat={tombolHapusSatuRiwayat}
+      />
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React from "react";
 
-// 1. Tangkap props fungsi dari Parent di sini
 const OrderanTersedia = ({
   daftarOrderan,
   tombolTerimaOrderan,
@@ -23,18 +22,18 @@ const OrderanTersedia = ({
               <p className="text-xs text-slate-400">{item.jarak}</p>
             </div>
 
-            {/* KOTAK KANAN: Berisi Tarif dan Tombol Terima */}
+            {/* KOTAK KANAN: Berisi Tarif & Tempat Tombol Terima */}
             <div className="text-right flex flex-col items-end gap-1">
               <span className="font-bold text-emerald-600">
                 Rp {item.tarif}
               </span>
 
-              {/* 🫵 TOMBOL TERIMA ORDERAN */}
+              {/* 🫵 TUGAS KAMU: PASANG TOMBOL "TERIMA" DI SINI */}
               <button
                 onClick={() =>
-                  tombolTerimaOrderan(item.id, item.tarif, item.penumpang)
+                  tombolTerimaOrderan(item.id, item.penumpang, item.tarif)
                 }
-                className="text-xs bg-emerald-600 text-white px-2 py-1 rounded-lg hover:bg-emerald-700 font-medium transition disabled:bg-slate-200 disabled:text-slate-400"
+                className="text-xs py-1 px-1.5 rounded-xl text-white font-medium bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400"
                 disabled={!apakahDriverAktif}
               >
                 Terima
