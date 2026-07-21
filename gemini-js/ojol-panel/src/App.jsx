@@ -1,12 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CardDriver from "./components/CardDriver";
 import OrderanTersedia from "./components/OrderanTersedia";
 import CardRiwayat from "./components/CardRiwayat";
 
 const App = () => {
-  const [saldo, setSaldo] = useState(0);
+  // 1. SILAKAN AMBIL KODE useState SALDO & RIWAYAT KAMU YANG LAMA
+  // 2. MODIFIKASI initial value-nya (angka 0 dan [] nya) agar mengambil dari localStorage jika ada.
+  // Contoh Hint untuk Saldo: useState(Number(localStorage.getItem("saldo")) || 0);
+  // Silakan racik sendiri untuk state riwayat!
+
+  const [saldo, setSaldo] = useState(
+    Number(localStorage.getItem("saldo")) || 0,
+  );
+  const [riwayat, setRiwayat] = useState(
+    JSON.parse(localStorage.getItem("riwayat")) || [],
+  );
+
+  // ========================================================
+  // 3. TULIS LOGIKA USEEFFECT KAMU DI SINI
+  // Buat 2 fungsi useEffect terpisah:
+  // - useEffect pertama: Mengintip state 'saldo', fungsinya menyimpan saldo ke localStorage.
+  // - useEffect kedua: Mengintip state 'riwayat', fungsinya menyimpan riwayat ke localStorage.
+
+  // ... Ketik kode useEffect 1 (untuk Saldo) di sini ...
+  useEffect(() => {
+    localStorage.setItem("saldo", String(saldo));
+  }, [saldo]);
+
+  // ... Ketik kode useEffect 2 (untuk Riwayat) di sini ...
+  useEffect(() => {
+    localStorage.setItem("riwayat", JSON.stringify(riwayat));
+  }, [riwayat]);
+
+  // ========================================================
   const [apakahDriverAktif, setApakahDriverAktif] = useState(false);
-  const [riwayat, setRiwayat] = useState([]);
   const [daftarOrderan, setDaftarOrderan] = useState([
     { id: 101, penumpang: "Budi Santoso", jarak: "3.5 km", tarif: 15000 },
     { id: 102, penumpang: "Siti Rahma", jarak: "5.2 km", tarif: 22000 },
