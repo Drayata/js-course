@@ -51,17 +51,21 @@ const App = () => {
     }
 
     const timer = setInterval(() => {
-      const acak =
-        stokPenumpang[Math.floor(Math.random() * stokPenumpang.length)];
+      if (daftarOrderan.lenght < 5) {
+        const acak =
+          stokPenumpang[Math.floor(Math.random() * stokPenumpang.length)];
 
-      const orderanBaru = {
-        id: Date.now(),
-        penumpang: acak.nama,
-        jarak: acak.jarak,
-        tarif: acak.tarif,
-      };
+        const orderanBaru = {
+          id: Date.now(),
+          penumpang: acak.nama,
+          jarak: acak.jarak,
+          tarif: acak.tarif,
+        };
 
-      setDaftarOrderan((orderanLama) => [...orderanLama, orderanBaru]);
+        setDaftarOrderan((orderanLama) => [...orderanLama, orderanBaru]);
+      } else {
+        return () => clearInterval(timer);
+      }
     }, 5000);
 
     return () => clearInterval(timer);
