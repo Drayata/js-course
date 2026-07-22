@@ -3,6 +3,13 @@ import CardDriver from "./components/CardDriver";
 import OrderanTersedia from "./components/OrderanTersedia";
 import CardRiwayat from "./components/CardRiwayat";
 
+const stokPenumpang = [
+  { nama: "Rizky Pratama", jarak: "2.1 km", tarif: 12000 },
+  { nama: "Dewi Lestari", jarak: "4.8 km", tarif: 20000 },
+  { nama: "Fajar Nugraha", jarak: "1.5 km", tarif: 10000 },
+  { nama: "Eka Putri", jarak: "6.0 km", tarif: 25000 },
+];
+
 const App = () => {
   // 1. SILAKAN AMBIL KODE useState SALDO & RIWAYAT KAMU YANG LAMA
   // 2. MODIFIKASI initial value-nya (angka 0 dan [] nya) agar mengambil dari localStorage jika ada.
@@ -15,6 +22,12 @@ const App = () => {
   const [riwayat, setRiwayat] = useState(
     JSON.parse(localStorage.getItem("riwayat")) || [],
   );
+  const [apakahDriverAktif, setApakahDriverAktif] = useState(false);
+  const [daftarOrderan, setDaftarOrderan] = useState([
+    { id: 101, penumpang: "Budi Santoso", jarak: "3.5 km", tarif: 15000 },
+    { id: 102, penumpang: "Siti Rahma", jarak: "5.2 km", tarif: 22000 },
+    { id: 103, penumpang: "Anto Wijaya", jarak: "1.2 km", tarif: 10000 },
+  ]);
 
   // ========================================================
   // 3. TULIS LOGIKA USEEFFECT KAMU DI SINI
@@ -24,7 +37,7 @@ const App = () => {
 
   // ... Ketik kode useEffect 1 (untuk Saldo) di sini ...
   useEffect(() => {
-    localStorage.setItem("saldo", String(saldo));
+    localStorage.setItem("saldo", saldo);
   }, [saldo]);
 
   // ... Ketik kode useEffect 2 (untuk Riwayat) di sini ...
@@ -32,13 +45,29 @@ const App = () => {
     localStorage.setItem("riwayat", JSON.stringify(riwayat));
   }, [riwayat]);
 
+  useEffect(() => {
+    if (!apakahDriverAktif) {
+      return;
+    }
+
+    const timer = setInterval(() => {
+      const acak =
+        stokPenumpang[Math.floor(Math.random() * stokPenumpang.length)];
+
+      const orderanBaru = {
+        id: Date.now(),
+        penumpang: acak.nama,
+        jarak: acak.jarak,
+        tarif: acak.tarif,
+      };
+
+      setDaftarOrderan((orderanLama) => [...orderanLama, orderanBaru]);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [apakahDriverAktif]);
+
   // ========================================================
-  const [apakahDriverAktif, setApakahDriverAktif] = useState(false);
-  const [daftarOrderan, setDaftarOrderan] = useState([
-    { id: 101, penumpang: "Budi Santoso", jarak: "3.5 km", tarif: 15000 },
-    { id: 102, penumpang: "Siti Rahma", jarak: "5.2 km", tarif: 22000 },
-    { id: 103, penumpang: "Anto Wijaya", jarak: "1.2 km", tarif: 10000 },
-  ]);
 
   const tombolTarikOrderan = () => {
     setSaldo(saldo + 20000);
