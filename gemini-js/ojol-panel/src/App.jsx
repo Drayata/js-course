@@ -51,22 +51,18 @@ const App = () => {
     }
 
     const timer = setInterval(() => {
-      if (daftarOrderan.lenght < 5) {
-        const acak =
-          stokPenumpang[Math.floor(Math.random() * stokPenumpang.length)];
+      const acak =
+        stokPenumpang[Math.floor(Math.random() * stokPenumpang.length)];
 
-        const orderanBaru = {
-          id: Date.now(),
-          penumpang: acak.nama,
-          jarak: acak.jarak,
-          tarif: acak.tarif,
-        };
+      const orderanBaru = {
+        id: Date.now(),
+        penumpang: acak.nama,
+        jarak: acak.jarak,
+        tarif: acak.tarif,
+      };
 
-        setDaftarOrderan((orderanLama) => [...orderanLama, orderanBaru]);
-      } else {
-        return () => clearInterval(timer);
-      }
-    }, 5000);
+      setDaftarOrderan((orderanLama) => [...orderanLama, orderanBaru]);
+    }, 2000);
 
     return () => clearInterval(timer);
   }, [apakahDriverAktif]);
@@ -124,6 +120,11 @@ const App = () => {
     setRiwayat(sisaRiwayat);
   };
 
+  const tombolTolakOrderan = (id) => {
+    const sisaOrderan = daftarOrderan.filter((item) => item.id !== id);
+    setDaftarOrderan(sisaOrderan);
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col justify-center items-center py-10">
       <CardDriver
@@ -138,6 +139,7 @@ const App = () => {
         daftarOrderan={daftarOrderan}
         apakahDriverAktif={apakahDriverAktif}
         tombolTerimaOrderan={tombolTerimaOrderan}
+        tombolTolakOrderan={tombolTolakOrderan}
       />
 
       <CardRiwayat

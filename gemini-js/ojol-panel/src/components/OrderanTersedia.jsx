@@ -3,6 +3,7 @@ import React from "react";
 const OrderanTersedia = ({
   daftarOrderan,
   tombolTerimaOrderan,
+  tombolTolakOrderan,
   apakahDriverAktif,
 }) => {
   return (
@@ -37,6 +38,13 @@ const OrderanTersedia = ({
                 disabled={!apakahDriverAktif}
               >
                 Terima
+              </button>
+              <button
+                onClick={() => tombolTolakOrderan(item.id)}
+                className="text-xs py-1 px-1.5 rounded-xl text-white font-medium bg-red-600 hover:bg-red-700 disabled:bg-slate-200 disabled:text-slate-400"
+                disabled={!apakahDriverAktif}
+              >
+                Tolak
               </button>
             </div>
           </div>
