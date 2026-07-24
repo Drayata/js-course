@@ -61,7 +61,13 @@ const App = () => {
         tarif: acak.tarif,
       };
 
-      setDaftarOrderan((orderanLama) => [...orderanLama, orderanBaru]);
+      setDaftarOrderan((orderanLama) => {
+        if (orderanLama.length >= 5) {
+          return orderanLama;
+        } else {
+          return [...orderanLama, orderanBaru];
+        }
+      });
     }, 2000);
 
     return () => clearInterval(timer);
