@@ -1,0 +1,14 @@
+# Mengabaikan node_modules di folder manapun
+node_modules/
+
+# Mengabaikan file build/dist jika ada
+dist/
+build/
+
+# Mengabaikan environment variables lokal
+.env
+.env.local
+
+# Mengabaikan file sistem/editor
+.DS_Store
+.vscode/
