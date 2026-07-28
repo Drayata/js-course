@@ -148,4 +148,5 @@ const book = getBook(2);
 const { title, genres, author } = book;
 
 const [primaryGenre, secondaryGenre] = genres;
-console.log(title, `genre are: ${primaryGenre}, ${secondaryGenre}`);
+const updatedGenres = [...genres, "gebat", "gayum"];
+console.log(updatedGenres);
