@@ -145,8 +145,15 @@ function getBook(id) {
 
 const book = getBook(2);
 
-const { title, genres, author } = book;
+const { title, genres, author, publicationDate } = book;
 
 const [primaryGenre, secondaryGenre] = genres;
 const updatedGenres = [...genres, "gebat", "gayum"];
 console.log(updatedGenres);
+
+//arrow function
+const getYear = (tgl) => tgl.split("-")[0];
+const getYearArrow2 = (tgl) => {
+  return tgl.split("-")[0];
+};
+console.log(getYearArrow2(publicationDate));
