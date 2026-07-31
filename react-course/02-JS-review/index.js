@@ -143,10 +143,19 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
-const book = getBook(2);
+// const book = getBook(2);
 
-const { title, genres, author } = book;
+// const { title, genres, author } = book;
 
-const [primaryGenre, secondaryGenre] = genres;
-const updatedGenres = [...genres, "gebat", "gayum"];
-console.log(updatedGenres);
+// const [primaryGenre, secondaryGenre] = genres;
+// const updatedGenres = [...genres, "gebat", "gayum"];
+
+// console.log(updatedGenres);
+
+const books = getBooks();
+books;
+
+const booksAuthor = books.map((book) => {
+  return book.author;
+});
+booksAuthor;
