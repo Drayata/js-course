@@ -57,16 +57,6 @@ const App = () => {
   );
 };
 
-const Pizza = () => {
-  return (
-    <div>
-      <img src="pizzas/spinaci.jpg" alt="pizza spinaci" />
-      <h3>Pizza Spinaci</h3>
-      <p>Tomato, mozarella, spinach, and ricotta cheese</p>
-    </div>
-  );
-};
-
 const Header = () => {
   // const style = { color: "red", fontSize: "48px" };
   const style = {};
@@ -82,11 +72,32 @@ const Menu = () => {
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <Pizza />
-      <Pizza />
-      <Pizza />
-      <Pizza />
+      <div className="pizza">
+        <Pizza
+          name="Pizza Spinaci"
+          ingredients="Tomato, mozarella, spinach, and ricotta cheese"
+          photoName="pizzas/spinaci.jpg"
+          price={12}
+        />
+
+        <Pizza
+          name="Pizza funghi"
+          ingredients="Tomato, fungus, jamur, pinaple"
+          photoName="pizzas/funghi.jpg"
+          price={20}
+        />
+      </div>
     </main>
+  );
+};
+
+const Pizza = (props) => {
+  return (
+    <div>
+      <img src={props.photoName} alt={props.name} />
+      <h3>{props.name}</h3>
+      <p>{props.ingredients}</p>
+    </div>
   );
 };
 
