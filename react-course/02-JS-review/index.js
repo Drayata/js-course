@@ -159,3 +159,11 @@ const booksAuthor = books.map((book) => {
   return book.author;
 });
 booksAuthor;
+
+const longBooks = books
+  .filter((book) => book.pages > 500)
+  .map((book) => book.title);
+longBooks;
+
+const allBookPages = books.reduce((acc, book) => acc + book.pages, 0);
+allBookPages;
