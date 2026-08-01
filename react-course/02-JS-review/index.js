@@ -153,17 +153,36 @@ function getBook(id) {
 // console.log(updatedGenres);
 
 const books = getBooks();
-books;
 
 const booksAuthor = books.map((book) => {
   return book.author;
 });
-booksAuthor;
 
 const longBooks = books
   .filter((book) => book.pages > 500)
   .map((book) => book.title);
-longBooks;
 
 const allBookPages = books.reduce((acc, book) => acc + book.pages, 0);
-allBookPages;
+
+const sortedBookPages = books
+  .slice()
+  .sort((a, b) => a.pages - b.pages)
+  .map((book) => ({ title: book.title, pages: book.pages }));
+
+const newBook = {
+  id: 6,
+  title: "Johnson and the family",
+  author: "Moonton",
+  genres: ["comedy", "lawak", "puncak"],
+};
+
+const afterBooksAdd = [...books, newBook];
+afterBooksAdd;
+
+const afterBooksDelete = afterBooksAdd.filter((book) => book.id !== 2);
+afterBooksDelete;
+
+const afterBooksUpdate = afterBooksDelete.map((book) =>
+  book.id === 1 ? { ...book, title: "dongok", pages: 1 } : book,
+);
+afterBooksUpdate;
