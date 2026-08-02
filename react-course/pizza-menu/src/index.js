@@ -74,17 +74,19 @@ const Menu = () => {
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <p>
-        Italian Pizza Delicioso Which is Literally Botak Maybe Ini adalah aku
-        raja mehiko
-      </p>
 
       {pizzas.length > 0 ? (
-        <ul className="pizzas">
-          {pizzaData.map((pizza) => {
-            return <Pizza pizzaObj={pizza} key={pizza.name} />;
-          })}
-        </ul>
+        <>
+          <p>
+            Italian Pizza Delicioso Which is Literally Botak Maybe Ini adalah
+            aku raja mehiko
+          </p>
+          <ul className="pizzas">
+            {pizzaData.map((pizza) => {
+              return <Pizza pizzaObj={pizza} key={pizza.name} />;
+            })}
+          </ul>
+        </>
       ) : (
         <p>We're still working on our menu's :)</p>
       )}
@@ -93,15 +95,15 @@ const Menu = () => {
 };
 
 const Pizza = ({ pizzaObj }) => {
-  if (pizzaObj.soldOut) return null;
+  // if (pizzaObj.soldOut) return null;
 
   return (
-    <li className="pizza">
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
       <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
         <h3>{pizzaObj.name}</h3>
         <p>{pizzaObj.ingredients}</p>
-        <span>{pizzaObj.price}</span>
+        <span>{pizzaObj.soldOut ? "SOLDOUT" : pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -114,6 +116,7 @@ const Footer = () => {
 
   const isOpen = hour >= open && hour <= close;
   console.log(isOpen);
+
   return (
     <footer className="footer">
       {isOpen ? (
