@@ -2,6 +2,39 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
+const skills = [
+  {
+    skill: "HTML",
+    level: "advance",
+    color: "orange",
+  },
+  {
+    skill: "CSS",
+    level: "intermidiate",
+    color: "blue",
+  },
+  {
+    skill: "Javascript",
+    level: "intermidiate",
+    color: "yellow",
+  },
+  {
+    skill: "Git & Github",
+    level: "advance",
+    color: "grey",
+  },
+  {
+    skill: "React",
+    level: "beginner",
+    color: "lightblue",
+  },
+  {
+    skill: "C++",
+    level: "beginner",
+    color: "darkblue",
+  },
+];
+
 function App() {
   return (
     <div className="card">
@@ -11,7 +44,7 @@ function App() {
         {/* Should contain one Skill component
         for each web dev skill that you have,
         customized with props */}
-        <SkillList skill="HTML" bg="orange" />
+        <SkillList />
       </div>
     </div>
   );
@@ -37,20 +70,20 @@ function Intro() {
 function SkillList() {
   return (
     <ul className="skill-list">
-      <Skill skill="HTML" bg="orange" />
-      <Skill skill="CSS" bg="blue" />
-      <Skill skill="Javascript" bg="yellow" />
-      <Skill skill="Git & Github" bg="grey" />
-      <Skill skill="React" bg="lightblue" />
-      <Skill skill="C++" bg="darkblue" />
+      {skills.map((skill) => (
+        <Skill skillsObj={skill} />
+      ))}
     </ul>
   );
 }
 
-function Skill(props) {
+function Skill({ skillsObj }) {
   return (
-    <li className="skill" style={{ backgroundColor: `${props.bg}` }}>
-      {props.skill}
+    <li className="skill" style={{ backgroundColor: `${skillsObj.color}` }}>
+      {skillsObj.skill}
+      {skillsObj.level === "beginner" && " 👶"}
+      {skillsObj.level === "intermidiate" && " 👍"}
+      {skillsObj.level === "advance" && " 💪"}
     </li>
   );
 }
@@ -61,5 +94,5 @@ const root = createRoot(rootElement);
 root.render(
   <StrictMode>
     <App />
-  </StrictMode>
+  </StrictMode>,
 );
