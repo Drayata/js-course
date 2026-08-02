@@ -91,12 +91,12 @@ const Menu = () => {
   );
 };
 
-const Pizza = (props) => {
+const Pizza = ({ name, ingredients, photoName, price }) => {
   return (
     <div>
-      <img src={props.photoName} alt={props.name} />
-      <h3>{props.name}</h3>
-      <p>{props.ingredients}</p>
+      <img src={photoName} alt={name} />
+      <h3>{name}</h3>
+      <p>{ingredients}</p>
     </div>
   );
 };
