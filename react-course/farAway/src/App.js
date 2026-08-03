@@ -1,53 +1,36 @@
-import { useState } from "react";
-
 const App = () => {
   return (
     <div className="App">
-      <Counter />
+      <Logo />
+      <Form />
+      <PackingList />
+      <Stats />
     </div>
   );
 };
 
-const Counter = () => {
-  const [step, setStep] = useState(1);
-  const [count, setCount] = useState(0);
-  const date = new Date();
-  date.setDate(date.getDate() + count);
+const Logo = () => {
+  return <h1>Far Away</h1>;
+};
 
-  const handleSubsStep = () => {
-    setStep((s) => s - 1);
-  };
-
-  const handleAddStep = () => {
-    setStep((s) => s + 1);
-  };
-
-  const handleSubsCount = () => {
-    setCount((c) => c - step);
-  };
-
-  const handleAddCount = () => {
-    setCount((c) => c + step);
-  };
-
+const Form = () => {
   return (
-    <div>
-      <div className="step">
-        <button onClick={handleSubsStep}>-</button>
-        Step: {step}
-        <button onClick={handleAddStep}>+</button>
-      </div>
-      <div className="count">
-        <button onClick={handleSubsCount}>-</button>
-        Count: {count}
-        <button onClick={handleAddCount}>+</button>
-      </div>
-      <p>
-        {count !== 0
-          ? `${count > 0 ? `${count} days from today is  ${date.toDateString()}` : `${Math.abs(count)} days ago from today is  ${date.toDateString()}`}`
-          : `Today is ${date.toDateString()}`}
-      </p>
+    <div className="add-form">
+      <h3> What you need for your trip?</h3>
     </div>
   );
 };
+
+const PackingList = () => {
+  return <div className="list">List</div>;
+};
+
+const Stats = () => {
+  return (
+    <footer>
+      <em>You have X items on your list, and you already packed X (X%)</em>
+    </footer>
+  );
+};
+
 export default App;
