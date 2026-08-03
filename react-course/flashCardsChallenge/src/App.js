@@ -44,23 +44,35 @@ const questions = [
 ];
 
 function FlashCards() {
+  const [selectedId, setSelectedID] = useState(null);
+
+  const handleSelected = (id) => {
+    setSelectedID(id === selectedId ? null : id);
+  };
+
   return (
     <div className="flashcards">
       {questions.map((question) => (
-        <Card question={question} />
+        <div
+          key={question.id}
+          onClick={() => handleSelected(question.id)}
+          className={selectedId === question.id ? "selected" : ""}
+        >
+          {selectedId === question.id ? question.answer : question.question}
+        </div>
       ))}
     </div>
   );
 }
 
-function Card({ question }) {
-  const [showAnswer, setShowAnswer] = useState(false);
-  return (
-    <div
-      onClick={() => setShowAnswer((sa) => !sa)}
-      className={showAnswer ? "selected" : ""}
-    >
-      {showAnswer ? question.answer : question.question}
-    </div>
-  );
-}
+// function Card({ question }) {
+//   const [showAnswer, setShowAnswer] = useState(false);
+//   return (
+//     <div
+//       onClick={() => setShowAnswer((sa) => !sa)}
+//       className={showAnswer ? "selected" : ""}
+//     >
+//       {showAnswer ? question.answer : question.question}
+//     </div>
+//   );
+// }
