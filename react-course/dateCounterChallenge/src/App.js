@@ -48,14 +48,16 @@ const Counter = () => {
           ? `${count > 0 ? `${count} days from today is  ${date.toDateString()}` : `${Math.abs(count)} days ago from today is  ${date.toDateString()}`}`
           : `Today is ${date.toDateString()}`}
       </p>
-      <button
-        onClick={() => {
-          setCount((c) => 0);
-          setStep((s) => 1);
-        }}
-      >
-        Reset
-      </button>
+      {step !== 1 || count !== 0 ? (
+        <button
+          onClick={() => {
+            setCount((c) => 0);
+            setStep((s) => 1);
+          }}
+        >
+          Reset
+        </button>
+      ) : null}
     </div>
   );
 };
