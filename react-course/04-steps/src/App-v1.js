@@ -37,29 +37,22 @@ const App = () => {
             {step}. {messages[step - 1]}
           </p>
           <div className="buttons">
-            <Button onClick={handlePrev} textColor="#fff" bgColor="#7950f2">
-              {" "}
-              {`<--`}Previous{" "}
-            </Button>
-            <Button onClick={handleNext} textColor="#fff" bgColor="#7950f2">
-              {" "}
-              Next{`-->`}{" "}
-            </Button>
+            <button
+              onClick={handlePrev}
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+            >
+              Previous
+            </button>
+            <button
+              onClick={handleNext}
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+            >
+              Next
+            </button>
           </div>
         </div>
       )}
     </>
-  );
-};
-
-const Button = ({ textColor, bgColor, onClick, children }) => {
-  return (
-    <button
-      onClick={onClick}
-      style={{ backgroundColor: bgColor, color: textColor }}
-    >
-      {children}
-    </button>
   );
 };
 
