@@ -20,7 +20,10 @@ const App = () => {
     );
   };
   const handleClearItems = () => {
-    setItems([]);
+    const confirmed = window.confirm(
+      "Are you sure want to delete all of the list?",
+    );
+    if (confirmed) setItems([]);
   };
 
   return (
