@@ -19,6 +19,9 @@ const App = () => {
       ),
     );
   };
+  const handleClearItems = () => {
+    setItems([]);
+  };
 
   return (
     <div className="app">
@@ -28,6 +31,7 @@ const App = () => {
         items={items}
         onDeleteItems={handleDeleteItems}
         onToggleItem={handleToggleItem}
+        onClearItems={handleClearItems}
       />
       <Stats items={items} />
     </div>
@@ -79,7 +83,7 @@ const Form = ({ onAddItems }) => {
   );
 };
 
-const PackingList = ({ items, onDeleteItems, onToggleItem }) => {
+const PackingList = ({ items, onDeleteItems, onToggleItem, onClearItems }) => {
   const [sortedBy, setSortedBy] = useState("input");
 
   let sortedItems;
@@ -107,12 +111,13 @@ const PackingList = ({ items, onDeleteItems, onToggleItem }) => {
           />
         ))}
       </ul>
-      <div>
+      <div className="actions">
         <select value={sortedBy} onChange={(e) => setSortedBy(e.target.value)}>
           <option value="input"> Sorted By Input</option>
           <option value="description"> Sorted By Description</option>
           <option value="packed"> Sorted By Packed</option>
         </select>
+        <button onClick={onClearItems}>Clear Items</button>
       </div>
     </div>
   );
