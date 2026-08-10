@@ -41,8 +41,14 @@ const App = () => {
     setShowAddFriend((s) => !s);
   };
 
-  const handleUpdateBalance = () => {
-    setFriends((friends) => {});
+  const handleUpdateBalance = (value) => {
+    setFriends((friends) =>
+      friends.map((friend) =>
+        friend.id === selectedFriend.id
+          ? { ...friend, balance: friend.balance + value }
+          : friend,
+      ),
+    );
   };
 
   return (
@@ -60,7 +66,12 @@ const App = () => {
         </Button>
       </div>
 
-      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} />}
+      {selectedFriend && (
+        <FormSplitBill
+          selectedFriend={selectedFriend}
+          onUpdateBalance={handleUpdateBalance}
+        />
+      )}
     </div>
   );
 };
@@ -152,17 +163,17 @@ const FormAddFriend = ({ onAddNewFriend }) => {
   );
 };
 
-const FormSplitBill = ({ selectedFriend }) => {
+const FormSplitBill = ({ selectedFriend, onUpdateBalance }) => {
   const [billValue, setBillValue] = useState("");
   const [yourExpense, setYourExpense] = useState("");
+  const friendExpense = billValue ? billValue - yourExpense : "";
   const [whoPaying, setWhoPaying] = useState("you");
-
-  const friendExpense = billValue - yourExpense;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (whoPaying == "you");
+    if (!billValue || !yourExpense) return;
+    onUpdateBalance(whoPaying === "you" ? friendExpense : -yourExpense);
   };
 
   return (
@@ -173,14 +184,20 @@ const FormSplitBill = ({ selectedFriend }) => {
       <input
         type="text"
         value={billValue}
-        onChange={(e) => setBillValue(e.target.value)}
+        onChange={(e) => setBillValue(Number(e.target.value))}
       />
 
       <label>😎Your expense</label>
       <input
         type="text"
         value={yourExpense}
-        onChange={(e) => setYourExpense(e.target.value)}
+        onChange={(e) =>
+          setYourExpense(
+            Number(e.target.value) > billValue
+              ? yourExpense
+              : Number(e.target.value),
+          )
+        }
       />
 
       <label>😎😎{selectedFriend.name}'s expense</label>
