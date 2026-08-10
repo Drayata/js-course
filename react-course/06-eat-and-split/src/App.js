@@ -49,6 +49,7 @@ const App = () => {
           : friend,
       ),
     );
+    setSelectedFriend(null);
   };
 
   return (
