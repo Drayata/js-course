@@ -9,8 +9,5 @@ root.render(
   <React.StrictMode>
     {/* <App /> */}
     <StarElement maxRatings={10} />
-    <StarElement />
-    <StarElement maxRatings={3} />
-    <StarElement />
   </React.StrictMode>,
 );
