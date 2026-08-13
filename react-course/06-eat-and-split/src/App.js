@@ -71,6 +71,7 @@ const App = () => {
         <FormSplitBill
           selectedFriend={selectedFriend}
           onUpdateBalance={handleUpdateBalance}
+          key={selectedFriend.name}
         />
       )}
     </div>
