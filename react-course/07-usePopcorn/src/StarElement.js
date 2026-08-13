@@ -18,8 +18,9 @@ export default function StarElement({
   messages = [],
   className = "",
   setOnRating,
+  defaultRating = 0,
 }) {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(defaultRating);
   const [tempRating, setTempRating] = useState(0);
 
   const textStyle = {
