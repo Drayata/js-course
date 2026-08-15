@@ -56,21 +56,32 @@ export default function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const query = "interstellar";
+  const [error, setError] = useState("");
+  const [query, setQuery] = useState("interstellar");
 
   console.log("render");
 
   useEffect(() => {
     async function fetchMovies() {
-      setIsLoading(true);
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-      );
-      const data = await res.json();
+      try {
+        setIsLoading(true);
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+        );
 
-      setMovies(data.Search);
-      console.log(data.Search);
-      setIsLoading(false);
+        if (!res.ok)
+          throw new Error("There something wrong with fecthing data");
+
+        const data = await res.json();
+
+        if (data.Response === "False") throw new Error(data.Error);
+
+        setMovies(data.Search);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchMovies();
   }, []);
@@ -78,12 +89,16 @@ export default function App() {
   return (
     <>
       <Navbar>
-        <SearchBar />
+        <SearchBar query={query} onQuery={setQuery} />
         <NumResults movies={movies} />
       </Navbar>
 
       <Main>
-        <Box>{isLoading ? <Loader /> : <MovieList movies={movies} />}</Box>
+        <Box>
+          {isLoading && <Loader />}
+          {!isLoading && !error && <MovieList movies={movies} />}
+          {error && <ErrorMessage message={error} />}
+        </Box>
         <Box>
           <WatchedMoviesSummary watched={watched} />
           <WatchedMovieList watched={watched} />
@@ -91,6 +106,10 @@ export default function App() {
       </Main>
     </>
   );
+}
+
+function ErrorMessage({ message }) {
+  return <p className="error">{message}</p>;
 }
 
 function Loader() {
@@ -114,15 +133,14 @@ function Logo() {
   );
 }
 
-function SearchBar() {
-  const [query, setQuery] = useState("");
+function SearchBar({ query, onQuery }) {
   return (
     <input
       className="search"
       type="text"
       placeholder="Search movies..."
       value={query}
-      onChange={(e) => setQuery(e.target.value)}
+      onChange={(e) => onQuery(e.target.value)}
     />
   );
 }
