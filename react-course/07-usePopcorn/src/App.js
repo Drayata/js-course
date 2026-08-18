@@ -61,7 +61,11 @@ export default function App() {
   const [selectedId, setSelectedId] = useState(null);
 
   function handleSelectMovie(id) {
-    setSelectedId(id);
+    setSelectedId((selected) => (selected === id ? null : id));
+  }
+
+  function handleBackButton() {
+    setSelectedId(null);
   }
   console.log("render");
 
@@ -107,7 +111,7 @@ export default function App() {
         </Box>
         <Box>
           {selectedId ? (
-            <span>{selectedId}</span>
+            <SelectedMovie selectedId={selectedId} onBack={handleBackButton} />
           ) : (
             <>
               <WatchedMoviesSummary watched={watched} />
@@ -117,6 +121,17 @@ export default function App() {
         </Box>
       </Main>
     </>
+  );
+}
+
+function SelectedMovie({ selectedId, onBack }) {
+  return (
+    <div className="details">
+      <button className="btn-back" onClick={onBack}>
+        &larr;
+      </button>
+      {selectedId}
+    </div>
   );
 }
 
