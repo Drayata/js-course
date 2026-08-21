@@ -178,6 +178,15 @@ function SelectedMovie({ selectedId, onBack, onAddWatch, watched }) {
     getMovieDetails();
   }, [selectedId]);
 
+  useEffect(() => {
+    if (!title) return;
+    document.title = `Movie | ${title}`;
+    return () => {
+      document.title = "usePopcorn";
+      console.log(`Clean up for ${title}`);
+    };
+  }, [title]);
+
   function handleAdd() {
     const newMovie = {
       imdbID: selectedId,
