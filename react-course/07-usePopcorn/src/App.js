@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import StarElement from "./StarElement";
 
 // const tempMovieData = [
@@ -78,11 +78,16 @@ export default function App() {
   }
 
   useEffect(() => {
+    if (query.length <= 2) return;
+    const controller = new AbortController();
+
     async function fetchMovies() {
       try {
+        setError("");
         setIsLoading(true);
         const res = await fetch(
           `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+          { signal: controller.signal },
         );
 
         if (!res.ok)
@@ -93,14 +98,22 @@ export default function App() {
         if (data.Response === "False") throw new Error(data.Error);
 
         setMovies(data.Search);
+        setError("");
       } catch (err) {
-        setError(err.message);
+        console.error(err.message);
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
       } finally {
         setIsLoading(false);
       }
     }
     fetchMovies();
-  }, []);
+
+    return () => {
+      controller.abort();
+    };
+  }, [query]);
 
   return (
     <>
@@ -183,9 +196,22 @@ function SelectedMovie({ selectedId, onBack, onAddWatch, watched }) {
     document.title = `Movie | ${title}`;
     return () => {
       document.title = "usePopcorn";
-      console.log(`Clean up for ${title}`);
+      console.log(`Cleaning Up from ${title}`);
     };
   }, [title]);
+
+  useEffect(() => {
+    function callback(e) {
+      if (e.code === "Escape") {
+        onBack();
+        console.log("CLOSING");
+      }
+    }
+    document.addEventListener("keydown", callback);
+    return () => {
+      document.removeEventListener("keydown", callback);
+    };
+  }, [onBack]);
 
   function handleAdd() {
     const newMovie = {
