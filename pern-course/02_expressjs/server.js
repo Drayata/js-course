@@ -31,7 +31,9 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  c;
+  if (make || model || price) {
+    let imang;
+  }
 });
 
 router.put("/:id", (req, res) => {
