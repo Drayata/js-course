@@ -34,6 +34,10 @@ router.post("/", (req, res) => {
   if (make || model || price) {
     let imang;
   }
+  hasdbasdahsasasdsd;
+  sdfsyhfgsdf;
+  sdfytsdgfsdfsud;
+  afuasdfui;
 });
 
 router.put("/:id", (req, res) => {
