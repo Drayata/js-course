@@ -274,6 +274,7 @@ function SelectedMovie({ selectedId, onBack, onAddWatch, watched }) {
             <p>Starring {actors}</p>
             <p>Directed by {director}</p>
           </section>
+          <p>hay</p>
         </>
       )}
     </div>
