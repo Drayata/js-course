@@ -299,7 +299,7 @@ function NumResults({ movies }) {
 function Logo() {
   return (
     <div className="logo">
-      <span role="img">🍿</span>
+      <span role="img">🍿wokwok</span>
       <h1>usePopcorn</h1>
     </div>
   );
