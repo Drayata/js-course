@@ -55,7 +55,9 @@ const KEY = "5e4700b3";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(
+    JSON.parse(localStorage.getItem("watched")) || [],
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("interstellar");
@@ -114,6 +116,10 @@ export default function App() {
       controller.abort();
     };
   }, [query]);
+
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
 
   return (
     <>
@@ -299,7 +305,7 @@ function NumResults({ movies }) {
 function Logo() {
   return (
     <div className="logo">
-      <span role="img">🍿wokwok</span>
+      <span role="img">🍿</span>
       <h1>usePopcorn</h1>
     </div>
   );
