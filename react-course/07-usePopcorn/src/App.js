@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarElement from "./StarElement";
 
 // const tempMovieData = [
@@ -60,7 +60,7 @@ export default function App() {
   );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [query, setQuery] = useState("interstellar");
+  const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
   function handleSelectMovie(id) {
@@ -124,7 +124,7 @@ export default function App() {
   return (
     <>
       <Navbar>
-        <SearchBar query={query} onQuery={setQuery} />
+        <SearchBar query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </Navbar>
 
@@ -164,6 +164,12 @@ function SelectedMovie({ selectedId, onBack, onAddWatch, watched }) {
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
 
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    if (userRating) countRef.current += 1;
+  }, [userRating]);
+
   const isMovieWatched = watched
     .map((watched) => watched.imdbID)
     .includes(selectedId);
@@ -173,7 +179,6 @@ function SelectedMovie({ selectedId, onBack, onAddWatch, watched }) {
 
   const {
     Title: title,
-    Year: year,
     Poster: poster,
     Runtime: runtime,
     imdbRating,
@@ -230,6 +235,7 @@ function SelectedMovie({ selectedId, onBack, onAddWatch, watched }) {
     };
     onAddWatch(newMovie);
     onBack();
+    console.log(countRef.current);
   }
   return (
     <div className="details">
@@ -311,14 +317,31 @@ function Logo() {
   );
 }
 
-function SearchBar({ query, onQuery }) {
+function SearchBar({ query, setQuery }) {
+  const inputEl = useRef(null);
+
+  useEffect(() => {
+    function callback(e) {
+      if (document.activeElement === inputEl.current) return;
+
+      if (e.code === "Enter") {
+        inputEl.current.focus();
+        setQuery("");
+      }
+    }
+    document.addEventListener("keydown", callback);
+
+    return () => document.removeEventListener("keydown", callback);
+  }, [setQuery]);
+
   return (
     <input
       className="search"
       type="text"
       placeholder="Search movies..."
       value={query}
-      onChange={(e) => onQuery(e.target.value)}
+      onChange={(e) => setQuery(e.target.value)}
+      ref={inputEl}
     />
   );
 }
