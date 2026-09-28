@@ -138,7 +138,7 @@ export default function App() {
         </Box>
         <Box>
           {selectedId ? (
-            <SelectedMovie
+            <MovieDetails
               selectedId={selectedId}
               onBack={handleBackButton}
               onAddWatch={handleAddWatched}
@@ -159,7 +159,7 @@ export default function App() {
   );
 }
 
-function SelectedMovie({ selectedId, onBack, onAddWatch, watched }) {
+function MovieDetails({ selectedId, onBack, onAddWatch, watched }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState("");
